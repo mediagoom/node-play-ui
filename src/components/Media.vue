@@ -5,6 +5,8 @@
                 <p>{{idx}}</p>
                 <p><strong>{{status}}</strong></p>
                 <p>{{owner}}</p>
+
+                <a v-if="dash || hls3" v-on:click="play()" >Play</a>
         
 
           <ul v-if="errors && errors.length">
@@ -22,7 +24,7 @@ import axios from 'axios';
 
 export default {
     name: 'Media'
-  , props: ['mediaid']
+  , props: ['mediaid', 'idx']
   , data () {
     return {status: null
                     , name: null
@@ -35,7 +37,9 @@ export default {
                     , playready: null
                     , widevine: null
                     , errors: []
-                    , idx: null
+                    , play () {
+                        alert(this.dash);
+                }
     }
   }
    // Fetches assets when the component is created.
@@ -45,6 +49,7 @@ export default {
     .then(response => {
       // JSON responses are automatically parsed.
       this.status = response.data.status;
+      this.owner = response.data.owner;
       this.dash = response.data.dash;
       this.hls3 = response.data.hls3;
       this.thumb = response.data.thumb;
