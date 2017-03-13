@@ -10,6 +10,9 @@
             </div>
         </div>
 
+        <Uploader v-if="!assets.length">
+        </Uploader>
+
 
           <ul v-if="errors && errors.length">
             <li v-for="error of errors">
@@ -24,6 +27,7 @@
 
 import axios from 'axios';
 import Media from './Media.vue';
+import Uploader from './Uploader.vue';
 
 export default {
   name: 'Assets'
@@ -33,7 +37,7 @@ export default {
         , errors: []
     }
   }
-  , components: { 'Media': Media }
+  , components: {'Media': Media, 'Uploader': Uploader}
 
    // Fetches assets when the component is created.
    , created () {
