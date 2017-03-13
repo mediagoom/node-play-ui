@@ -1,6 +1,6 @@
 <template>
-    <div class="Media">
-        <h1>Media -{{mediaid}}-</h1>
+    <div class="Play">
+        <h1>Play -{{$route.params.id}}-</h1>
        
                 <p>{{idx}}</p>
                 <p><strong>{{status}}</strong></p>
@@ -21,10 +21,9 @@
 <script>
 
 import axios from 'axios';
-import router from '../router';
 
 export default {
-    name: 'Media'
+    name: 'Play'
   , props: ['mediaid', 'idx']
   , data () {
     return {status: null
@@ -39,14 +38,14 @@ export default {
                     , widevine: null
                     , errors: []
                     , play () {
-                        router.push({name: 'Play', params: { id: this.mediaid }})
+                        alert(this.dash);
                 }
     }
   }
    // Fetches assets when the component is created.
    , created () {
        // axios.get(`/api/status/$(this.mediaid)`)
-        axios.get('/api/status/' + this.mediaid)
+        axios.get('/api/status/' + this.$route.params.id)
     .then(response => {
       // JSON responses are automatically parsed.
       this.status = response.data.status;
