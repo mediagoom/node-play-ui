@@ -34,6 +34,10 @@ module.exports = {
         changeOrigin: true
         //, pathRewrite: {'^/api': '/api'}
         }
+    , '/upload': {
+        target: 'http://localhost:3000'
+            , changeOrigin: true
+        }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README

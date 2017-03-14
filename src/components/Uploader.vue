@@ -2,6 +2,18 @@
     <div class="Uploader">
         <h1>Uploader</h1>
 
+        <input id="file_input" multiple type="file" v-on:change='selectFiles' />
+
+        <ul v-if="ids.length" id="example-1">
+          <li v-for="id in ids">
+          {{ id.idx }}
+          <p>{{ id.status }}</p>
+          <p>{{ id.serverid }}</p>
+          <a v-on:click='resumeUpload(id.idx)'>start</a>
+          </li>
+        </ul>
+        
+
 
           <ul v-if="errors && errors.length">
             <li v-for="error of errors">
@@ -14,12 +26,55 @@
 
 <script>
 
+import {UploadManager} from 'chunk-upload';
+import axios from 'axios';
+
+let upm = new UploadManager();
+
+    upm.setOptions({'url': window.location.protocol + '//' + window.location.host + '/upload'
+    , 'owner': 'uploader'});
+
 export default {
   name: 'Uploader'
   , data () {
-    return {
+      return {
+         // upm: new ChunkUpload()
+         // ,
          errors: []
+         , ids: []
+
     }
+  }
+  , created () {
+      upm.on('new', (id) => {
+        axios.get('/api/upload/' + id).then(response => {
+        // JSON responses are automatically parsed.
+        let serverid = response.data.id;
+
+        let url = upm.uploader[id]._opt.url;
+            url += '/' + serverid;
+            upm.uploader[id]._opt.url = url;
+
+        let idx = this.ids.length;
+
+        this.ids.push({id: id, status: 'paused', serverid: serverid, idx: idx});
+        }).catch(e => {
+            this.errors.push(e);
+        })
+      });
+    }
+    , methods: {
+       selectFiles: function () {
+           upm.selectFiles(event.target);
+       }
+       , resumeUpload: function (idx) {
+           let id = this.ids[idx];
+
+           upm.uploader[id].resume();
+
+           this.ids[idx].status = 'running';
+       }
+
   }
 
 }
