@@ -1,9 +1,12 @@
 <template>
 <div id="app">
-    <ul>
-        <li><router-link to="/uploader">Uploader</router-link></li>
-    </ul>
-    <img src="./assets/logo.png">
+    
+    <img src="./assets/logo.svg" id="logo">
+    <div>
+        <router-link to="/">Home</router-link> | 
+        <router-link to="/uploader">Uploader</router-link>
+    </div>
+    
     <router-view></router-view>
   </div>
 </template>
@@ -21,6 +24,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 1em;
+}
+
+#logo {
+    width: 5em;
+    margin-bottom: 0.2em;
 }
 </style>

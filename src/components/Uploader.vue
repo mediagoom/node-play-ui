@@ -6,10 +6,11 @@
 
         <ul v-if="ids.length" id="example-1">
           <li v-for="id in ids">
-          {{ id.idx }}
+          <p>{{ id.id }}</p>
           <p>{{ id.status }}</p>
-          <p>{{ id.serverid }}</p>
-          <a v-on:click='resumeUpload(id.idx)'>start</a>
+          <p>{{ id.perc }}</p>
+          <a v-if="id.status=='paused'" v-on:click='resumeUpload(id.idx)'>start</a>
+          <a v-if="id.status=='running'" v-on:click='pauseUpload(id.idx)'>pause</a>
           </li>
         </ul>
         
@@ -57,11 +58,24 @@ export default {
 
         let idx = this.ids.length;
 
-        this.ids.push({id: id, status: 'paused', serverid: serverid, idx: idx});
+        upm.uploader[id]._opt.tag = idx;
+
+        this.ids.push({id: id, status: 'paused', serverid: serverid, idx: idx, perc: 0});
         }).catch(e => {
             this.errors.push(e);
         })
-      });
+     });
+
+     upm.on('progress', (sn, id) => {
+         let idx = upm.uploader[id]._opt.tag;
+         this.ids[idx].perc = sn;
+     });
+
+     upm.on('completed', (id) => {
+         let idx = upm.uploader[id]._opt.tag;
+         this.ids[idx].perc = '100';
+         this.ids[idx].status = 'compleated'
+     });
     }
     , methods: {
        selectFiles: function (event) {
@@ -73,6 +87,13 @@ export default {
            upm.uploader[id].resume();
 
            this.ids[idx].status = 'running';
+       }
+       , pauseUpload: function (idx) {
+           let id = this.ids[idx].id;
+
+           upm.uploader[id].pause();
+
+           this.ids[idx].status = 'paused';
        }
 
   }
