@@ -2,10 +2,11 @@
     <div v-if="status=='ok'" class="Media">
         <h3>{{name}}</h3>
        
+                
+        <img v-if="thumb && thumb.length" :src="imgurl" class="pthumb"/>
+        <img v-if="dash || hls3" v-on:click="play()" class="picon" src="../assets/play-icon.png"/> 
 
-                <img v-if="thumb && thumb.length" :src="imgurl"/>
 
-                <a v-if="dash || hls3" v-on:click="play()" >Play</a>
         
 
           <ul v-if="errors && errors.length">
@@ -89,7 +90,17 @@ a {
   color: #42b983;
 }
 
-img {
-        width: 15em;
+.pthumb {
+    width: 15em;
+    margin-left: 4em;
+}
+
+.picon
+{
+    width: 4em;
+    left: -9.5em;
+    bottom: 2.2em;
+    position: relative;
+    cursor: pointer;
 }
 </style>
