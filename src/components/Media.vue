@@ -1,10 +1,9 @@
 <template>
-    <div class="Media">
-        <h1>Media -{{mediaid}}-</h1>
+    <div v-if="status=='ok'" class="Media">
+        <h3>{{name}}</h3>
        
-                <p>{{idx}}</p>
-                <p><strong>{{status}}</strong></p>
-                <p>{{owner}}</p>
+
+                <img v-if="thumb && thumb.length" :src="imgurl"/>
 
                 <a v-if="dash || hls3" v-on:click="play()" >Play</a>
         
@@ -22,6 +21,7 @@
 
 import axios from 'axios';
 import router from '../router';
+import config from './config';
 
 export default {
     name: 'Media'
@@ -54,12 +54,18 @@ export default {
       this.dash = response.data.dash;
       this.hls3 = response.data.hls3;
       this.thumb = response.data.thumb;
+      this.name = response.data.name;
+      this.id = this.mediaid;
        // alert(JSON.stringify(this.assets));
     })
     .catch(e => {
       this.errors.push(e);
     })
   }
+  , computed: {
+      imgurl: function () { return config.asset_root + '/' + this.owner + '/' + this.id + '/' + this.thumb[1]; }
+  }
+
 }
 </script>
 
@@ -81,5 +87,9 @@ li {
 
 a {
   color: #42b983;
+}
+
+img {
+        width: 15em;
 }
 </style>

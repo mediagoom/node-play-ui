@@ -38,6 +38,10 @@ module.exports = {
         target: 'http://localhost:3000'
             , changeOrigin: true
         }
+    , '/play': {
+        target: 'http://localhost:3000'
+            , changeOrigin: true
+        }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
