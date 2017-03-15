@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+<div id="app">
+    <ul>
+        <li><router-link to="/uploader">Uploader</router-link></li>
+    </ul>
     <img src="./assets/logo.png">
     <router-view></router-view>
   </div>

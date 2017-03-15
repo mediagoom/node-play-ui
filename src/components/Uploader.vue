@@ -64,11 +64,11 @@ export default {
       });
     }
     , methods: {
-       selectFiles: function () {
+       selectFiles: function (event) {
            upm.selectFiles(event.target);
        }
        , resumeUpload: function (idx) {
-           let id = this.ids[idx];
+           let id = this.ids[idx].id;
 
            upm.uploader[id].resume();
 
