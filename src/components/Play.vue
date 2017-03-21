@@ -1,13 +1,8 @@
 <template>
     <div class="Play">
-        <h1>Play -{{$route.params.id}}-</h1>
-       
-                <p>{{idx}}</p>
-                <p><strong>{{status}}</strong></p>
-                <p>{{owner}}</p>
+        <h3>Play {{name}}</h3>
 
-                <a v-if="dash || hls3" v-on:click="play()" >Play</a>
-        
+                <div id="playerhost"></div>
 
           <ul v-if="errors && errors.length">
             <li v-for="error of errors">
@@ -21,6 +16,9 @@
 <script>
 
 import axios from 'axios';
+import Mgplay from 'mgplay';
+
+let mgp = new Mgplay();
 
 export default {
     name: 'Play'
@@ -53,6 +51,11 @@ export default {
       this.dash = response.data.dash;
       this.hls3 = response.data.hls3;
       this.thumb = response.data.thumb;
+      this.id = response.data.id;
+      this.name = response.data.name;
+
+      mgp.play(window.location.protocol + '//' + window.location.host + '/play/' + this.owner + '/' + this.id + '/', response.data);
+
        // alert(JSON.stringify(this.assets));
     })
     .catch(e => {
