@@ -30,10 +30,7 @@
 import {UploadManager} from 'chunk-upload';
 import axios from 'axios';
 
-let upm = new UploadManager();
-
-    upm.setOptions({'url': window.location.protocol + '//' + window.location.host + '/upload'
-    , 'owner': 'uploader'});
+let upm = null;
 
 export default {
   name: 'Uploader'
@@ -47,6 +44,13 @@ export default {
     }
   }
   , created () {
+      upm = new UploadManager();
+
+      console.log('NEW UPLOADMANAGER');
+
+     upm.setOptions({'url': window.location.protocol + '//' + window.location.host + '/upload'
+        , 'owner': 'uploader'});
+
       upm.on('new', (id) => {
         axios.get('/api/upload/' + id).then(response => {
         // JSON responses are automatically parsed.

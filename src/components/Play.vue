@@ -1,9 +1,9 @@
 <template>
     <div class="Play">
         <h3>Play {{name}}</h3>
-
+        <div class="playbody">
                 <div id="playerhost"></div>
-
+        </div>
           <ul v-if="errors && errors.length">
             <li v-for="error of errors">
               {{error.message}}
@@ -83,5 +83,11 @@ li {
 
 a {
   color: #42b983;
+}
+
+.playbody
+{
+    margin-left: 2em;
+    margin-right: 2em;
 }
 </style>

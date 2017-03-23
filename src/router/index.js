@@ -12,6 +12,7 @@ export default new Router({
       path: '/',
       name: 'Assets',
       component: Assets
+      , props: {filter: 'ok'}
     }
     , {
         path: '/play/:id'
@@ -22,6 +23,12 @@ export default new Router({
         path: '/uploader'
     , name: 'Uploader'
     , component: Uploader
+    }
+    , {
+        path: '/working'
+    , name: 'Working'
+    , component: Assets
+    , props: {filter: 'working'}
     }
   ]
 })

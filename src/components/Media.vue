@@ -1,13 +1,12 @@
 <template>
-    <div v-if="status=='ok'" class="Media">
+    <div v-if="(status=='ok' && filter=='ok') || (status!='ok' && filter=='working') " class="Media">
         <h3>{{name}}</h3>
-       
-                
+
+        <p v-if="filter!='ok'">{{id}} - {{status}}</p>
+                      
         <img v-if="thumb && thumb.length" :src="imgurl" class="pthumb"/>
         <img v-if="dash || hls3" v-on:click="play()" class="picon" src="../assets/play-icon.png"/> 
 
-
-        
 
           <ul v-if="errors && errors.length">
             <li v-for="error of errors">
@@ -26,7 +25,7 @@ import config from './config';
 
 export default {
     name: 'Media'
-  , props: ['mediaid', 'idx']
+  , props: ['mediaid', 'idx', 'filter']
   , data () {
     return {status: null
                     , name: null

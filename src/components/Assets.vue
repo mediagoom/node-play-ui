@@ -1,16 +1,18 @@
 <template>
     <div class="Assets">
-        <h1>Assets -{{assets.length}}-</h1>
+        <h3>Media</h3>
         <div v-if="assets && assets.length">
             <div v-for="(a, idx) of assets" 
                 is="Media" 
                 v-bind:key="a.mediaid" 
                 v-bind:mediaid="a.id" 
-                v-bind:idx="idx" >
+                v-bind:idx="idx" 
+                v-bind:filter="filter"
+            >
             </div>
         </div>
 
-        <Uploader v-if="!assets.length">
+        <Uploader v-if="!assets.length && filter=='ok'">
         </Uploader>
 
 
@@ -31,6 +33,7 @@ import Uploader from './Uploader.vue';
 
 export default {
   name: 'Assets'
+  , props: ['filter']
   , data () {
     return {
           assets: []
