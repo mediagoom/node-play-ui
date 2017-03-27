@@ -32,4 +32,9 @@ export default {
     width: 5em;
     margin-bottom: 0.2em;
 }
+
+a {
+    color: #42b983;
+    text-decoration:none;
+}
 </style>

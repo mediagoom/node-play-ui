@@ -1,5 +1,5 @@
 <template>
-    <div v-if="(status=='ok' && filter=='ok') || (status!='ok' && filter=='working') " class="Media">
+    <div v-if="(status=='ok' && filter=='ok') || (status!='ok' && filter=='working') " class="media">
         <h3>{{name}}</h3>
 
         <p v-if="filter!='ok'">{{id}} - {{status}}</p>
@@ -89,17 +89,27 @@ a {
   color: #42b983;
 }
 
+.media {
+    position: relative;
+    width: 15em;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
 .pthumb {
     width: 15em;
-    margin-left: 4em;
+    position: relative;
+    z-index: 0;
 }
 
 .picon
 {
     width: 4em;
-    left: -9.5em;
+    left: 5.6em;
     bottom: 2.2em;
-    position: relative;
+    position: absolute;
     cursor: pointer;
+    z-index: 1;
 }
 </style>
