@@ -5,7 +5,7 @@
                 <div id="playerhost"></div>
         </div>
           <ul v-if="errors && errors.length">
-            <li v-for="error of errors">
+            <li v-for="error of errors" v-bind:key="error.message">
               {{error.message}}
             </li>
           </ul>
@@ -16,7 +16,7 @@
 <script>
 
 import axios from 'axios';
-import Mgplay from 'mgplay';
+import Mgplay from '@mediagoom/play/src/play.js';
 
 let mgp = new Mgplay();
 
@@ -66,7 +66,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
 h1, h2 {
   font-weight: normal;
 }

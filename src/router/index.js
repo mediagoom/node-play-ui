@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Assets from '@/components/Assets'
-import Play from '@/components/Play'
-import Uploader from '@/components/Uploader'
+import Assets from '../components/Assets'
+import Play from '../components/Play'
+//import Uploader from '../components/Uploader'
 
 Vue.use(Router)
 
@@ -19,11 +19,11 @@ export default new Router({
     , name: 'Play'
     , component: Play
     }
-    , {
+    /*, {
         path: '/uploader'
     , name: 'Uploader'
     , component: Uploader
-    }
+    }*/
     , {
         path: '/working'
     , name: 'Working'

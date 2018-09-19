@@ -17,7 +17,7 @@
 
 
           <ul v-if="errors && errors.length">
-            <li v-for="error of errors">
+            <li v-for="error of errors" v-bind:key="error.message" >
               {{error.message}}
             </li>
           </ul>
@@ -29,7 +29,7 @@
 
 import axios from 'axios';
 import Media from './Media.vue';
-import Uploader from './Uploader.vue';
+//import Uploader from './Uploader.vue';
 
 export default {
   name: 'Assets'
@@ -40,7 +40,7 @@ export default {
         , errors: []
     }
   }
-  , components: {'Media': Media, 'Uploader': Uploader}
+  , components: {'Media': Media/*, 'Uploader': Uploader*/}
 
    // Fetches assets when the component is created.
    , created () {
@@ -58,7 +58,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
 h1, h2 {
   font-weight: normal;
 }

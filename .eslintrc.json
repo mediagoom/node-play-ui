@@ -1,0 +1,63 @@
+{
+    "env": {
+          "es6": true
+        , "node": true
+        , "mocha": true
+    },
+    "globals": {
+        "dbg": true,
+        "expect": false
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:vue/recommended"
+      ],
+    "parserOptions": {
+        "parser": "babel-eslint"
+      , "sourceType": "module"
+      
+    }
+  , "rules": {
+      "indent": [
+          "error",
+          4
+      ],
+      "linebreak-style": [
+          "off",
+          "windows"
+      ],
+      "quotes": [
+          "warn",
+          "single"
+      ],
+      "semi": [
+          "warn",
+          "always"
+      ]
+      , "no-console" : [
+          "off"
+      ]
+      , "comma-style" : [
+            "warn"
+          , "first"
+      ]
+      , "vue/max-attributes-per-line": [
+        "warn",
+        {
+          "singleline": 4,
+          "multiline": {
+            "max": 4,
+            "allowFirstLine": true
+          }
+        }
+      ]
+      , "vue/v-bind-style": [
+        "warn",
+        "shorthand"
+      ]
+      , "vue/v-on-style" : [
+        "warn",
+        "longform"
+      ]
+    }
+}
