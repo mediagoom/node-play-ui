@@ -12,11 +12,10 @@
         
     </div>
 </template>
-
 <script>
 
 import axios from 'axios';
-import Mgplay from '@mediagoom/play/src/play.js';
+import Mgplay from '@mediagoom/play';
 
 let mgp = new Mgplay();
 

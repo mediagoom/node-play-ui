@@ -9,7 +9,7 @@
 
 
           <ul v-if="errors && errors.length">
-            <li v-for="error of errors">
+            <li v-for="error of errors" v-bind:key="error.message">
               {{error.message}}
             </li>
           </ul>
