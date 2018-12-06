@@ -1,6 +1,10 @@
 ﻿const webpack = require('webpack');
 const path    = require('path');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+const nodeExternals = require('webpack-node-externals')
+
+
 //var transform_imports = require('babel-plugin-transform-imports')
 
 function babel_plugins()
@@ -36,20 +40,37 @@ function babel_plugins()
     return plugins;
 }
 
+let externals = {
+    dashjs: 'dashjs'
+}
+
+if(process.env.NODE_ENV === 'test')
+{
+    externals = [nodeExternals()];
+}
+
 module.exports = {
     context: __dirname
-    , externals: {
+    , externals /*: {
         dashjs: 'dashjs'
-      }
+        
+    }*/
     , optimization: {
         splitChunks: {
-          cacheGroups: {
-            commons: {
-              test: /[\\/]node_modules[\\/]/,
-              name: 'vendors',
-              chunks: 'all'
+            cacheGroups: {
+                mediagoom:{
+                    test: /[\\/]node_modules[\\/]@mediagoom[\\/]/
+                    , name: 'mediagoom'
+                    , chunks: 'all'
+                    , priority: 10
+                }
+
+                , vendors: {
+                    test: /[\\/]node_modules[\\/]/
+                    , name: 'vendors'
+                    , chunks: 'all'
+                }
             }
-          }
         }
     }
     // the main entry of our app
@@ -58,7 +79,8 @@ module.exports = {
     //, entry: ['babel-polyfill', { main: './src/index.js' }]
     , output: {
         path: __dirname + '/bin/'
-        , filename: 'build.js'
+        , filename: 'bundle.js'
+        , chunkFilename: '[name].bundle.js'
         //, devtoolModuleFilenameTemplate: '[absolute-resource-path]'
         //, devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
     }
@@ -121,22 +143,22 @@ module.exports = {
             // this will apply to both plain `.scss` files
             // AND `<style lang="scss">` blocks in `.vue` files
             ,{
-                test: /\.scss$/,
-                use: [
-                'vue-style-loader',
-                'css-loader',
-                'sass-loader'
+                test: /\.scss$/
+                ,use: [
+                    'vue-style-loader'
+                    ,'css-loader'
+                    ,'sass-loader'
                 ]
             }
             ,{
-                test: /\.(png|jpg|gif|svg)$/,
-                use: [
-                  {
-                    loader: 'file-loader',
-                    options: {}
-                  }
+                test: /\.(png|jpg|gif|svg)$/
+                ,use: [
+                    {
+                        loader: 'file-loader'
+                        ,options: {}
+                    }
                 ]
-              }
+            }
             /*,{
                 test: /\.css$/
                 , use: [ 'style-loader', 'css-loader' ]
@@ -145,20 +167,12 @@ module.exports = {
         ]
     }
     , plugins: [
-        new VueLoaderPlugin()
-        /*
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor'
-            , filename: 'vendor.js'
-            , minChunks: function (module) {
-                //if(module.resource && (/vuetify/).test(module.resource)) {
-                //    return false;
-                //}
-                // this assumes your vendor imports exist in the node_modules directory
-                return module.context && module.context.indexOf('node_modules') !== -1;
-            }
+        /*new HtmlWebpackPlugin({
+            title: 'node-play-ui'
+            ,filename: '../index.html'
         })
-*/
+        ,*/ new VueLoaderPlugin()
+        
         /*
         , new webpack.optimize.CommonsChunkPlugin({
             name: 'manifest'
@@ -172,10 +186,11 @@ module.exports = {
 
     , devServer: {
         proxy: {
-          '/api': 'http://localhost:3000'
-          , '/play': 'http://localhost:3000'
+            '/api': 'http://localhost:3000'
+            , '/play': 'http://localhost:3000'
+            , '/upload': 'http://localhost:3000' 
         }
-      }
+    }
 };
 
 if (process.env.NODE_ENV != 'test') {

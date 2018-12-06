@@ -7,13 +7,22 @@
     "globals": {
         "dbg": true,
         "expect": false
-    },
+      
+          , "describe"   : false,
+          "it"         : false,
+          "before"     : false,
+          "beforeEach" : false,
+          "after"      : false,
+          "afterEach"  : false
+
+          , "import" : false
+          },
     "extends": [
         "eslint:recommended",
         "plugin:vue/recommended"
       ],
     "parserOptions": {
-        "parser": "babel-eslint"
+       "ecmaVersion": 2017
       , "sourceType": "module"
       
     }
@@ -23,8 +32,8 @@
           4
       ],
       "linebreak-style": [
-          "off",
-          "windows"
+        "warn"
+        , "unix"
       ],
       "quotes": [
           "warn",
@@ -60,4 +69,7 @@
         "longform"
       ]
     }
+
+    
+  
 }

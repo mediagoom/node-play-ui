@@ -1,5 +1,14 @@
 {
-    "editor.fontSize": 14,
+    
+        "files.eol": "\n"
+    , "files.exclude": {
+          "node_modules/": true
+        , "**/.nyc_output:": true
+        , "coverage/": true
+        , "*.lcov" : true
+    }
+    ,
+    "vim.useCtrlKeys": false, "editor.fontSize": 14,
   
     // Controls the font family.
     "editor.fontFamily": "Consolas, 'Courier New', monospace",
@@ -9,8 +18,5 @@
   
      , "editor.insertSpaces": true
   
-     // Configure glob patterns for excluding files and folders.
-    , "files.exclude": {
-        "node_modules/": true
-    }
+   
 }

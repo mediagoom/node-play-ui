@@ -5,17 +5,19 @@
   "author": "Alessandro <aseduto@hotmail.com>",
   "private": true,
   "scripts": {
-    "dev": "node build/dev-server.js",
-    "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
-    , "serve": "webpack-dev-server --open --hot"
-    , "start" : "node node_modules/@mediagoom/devman"
+    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
+    "play": "node node_modules/@mediagoom/devman run player",
+    "build-dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "serve": "webpack-dev-server --open --hot",
+    "start": "node node_modules/@mediagoom/devman"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
+    "@mediagoom/chunk-upload": "0.0.8",
     "axios": "^0.15.3",
     "vue": "^2.2.1",
     "vue-resource": "^1.2.1",
@@ -29,15 +31,20 @@
     "@babel/plugin-transform-object-assign": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
-    "@mediagoom/devman": "^0.0.6",
-    "@mediagoom/play": "^0.0.5",
+    "@mediagoom/devman": "^0.0.8",
+    "@vue/test-utils": "^1.0.0-beta.26",
     "autoprefixer": "^6.7.2",
     "babel-loader": "^8.0.2",
+    "chai": "^4.2.0",
     "css-loader": "^1.0.0",
     "eslint": "^5.6.0",
     "eslint-loader": "^2.1.0",
     "eslint-plugin-vue": "^4.7.1",
     "file-loader": "^2.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jsdom": "^13.0.0",
+    "jsdom-global": "^3.0.2",
+    "mocha-webpack": "^2.0.0-beta.0",
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
     "shx": "^0.3.2",
@@ -45,7 +52,8 @@
     "vue-template-compiler": "^2.5.17",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.8"
+    "webpack-dev-server": "^3.1.8",
+    "webpack-node-externals": "^1.7.2"
   },
   "engines": {
     "node": ">= 4.0.0",

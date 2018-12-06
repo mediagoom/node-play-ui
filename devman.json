@@ -13,19 +13,19 @@
                              , "shx cp -r ../play/lib node_modules/@mediagoom/play"
                              , "shx cp ../play/package.json node_modules/@mediagoom/play"
                             ]
-            
         }
         , {
                 "name"        : "api"
               , "watch"       : ["../node-play/src/**/*.js", "!../node-play/src/**/client/*", "!../node-play/src/**/test/*"]
               , "execOptions" : [{"cwd": "../node-play"}]
-              , "exec"        : ["npm run buildserver"]
+              , "exec"        : []
               , "options"     : {"cwd": "../node-play"}
-              , "cmd"         : {"proc": "node", "args": ["./bin/server/index.js"]}
+              , "cmd"         : {"proc": "node", "args": ["./src/server/index.js"]}
          }
          , 
          {
               "name"  : "node-play-ui"
+            , "comment" : "js files are watched be webpack dev server. We restart when we modify webpack.config.js "
             , "watch" : ["*.config.js"]
             , "cmd"   : {"proc": "npm", "args": ["run", "serve", "--", "--mode", "development"]}
             , "debug" : false 
