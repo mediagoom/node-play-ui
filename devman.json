@@ -19,7 +19,10 @@
               , "watch"       : ["../node-play/src/**/*.js", "!../node-play/src/**/client/*", "!../node-play/src/**/test/*"]
               , "execOptions" : [{"cwd": "../node-play"}]
               , "exec"        : []
-              , "options"     : {"cwd": "../node-play"}
+              , "options"     : {"cwd": "../node-play"
+                                  , "env":{
+                                    "NODE_ENV":"production"
+                                }}
               , "cmd"         : {"proc": "node", "args": ["./src/server/index.js"]}
          }
          , 
@@ -30,9 +33,9 @@
             , "cmd"   : {"proc": "npm", "args": ["run", "serve", "--", "--mode", "development"]}
             , "debug" : false 
             , "break" : false
-            , "options" : { "env":{
-                                      "DEVMANID" : "PROCESS-2"
-                                    , "CONSOLECHAR" : "[2]"
+            , "options" : { "cwd": "./"
+                             , "env":{
+                                      "NODE_ENV":"development"
                                   }
                             , "shell" : true
                           }

@@ -1,4 +1,4 @@
 export default {
-  asset_root: '/play'
-}
+    asset_root: '/play'
+};
 

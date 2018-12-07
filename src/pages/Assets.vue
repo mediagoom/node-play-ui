@@ -28,8 +28,8 @@
 <script>
 
 import axios from 'axios';
-import Media from './Media.vue';
-//import Uploader from './Uploader.vue';
+import Media from '../components/Media.vue';
+import Uploader from '../pages/Uploader.vue';
 
 export default {
   name: 'Assets'
@@ -40,7 +40,7 @@ export default {
         , errors: []
     }
   }
-  , components: {'Media': Media/*, 'Uploader': Uploader*/}
+  , components: {'Media': Media, 'Uploader': Uploader}
 
    // Fetches assets when the component is created.
    , created () {

@@ -2,7 +2,7 @@
 const path    = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-const nodeExternals = require('webpack-node-externals')
+const nodeExternals = require('webpack-node-externals');
 
 
 //var transform_imports = require('babel-plugin-transform-imports')
@@ -12,12 +12,13 @@ function babel_plugins()
    
     let plugins = ['@babel/plugin-transform-runtime', '@babel/plugin-syntax-dynamic-import'];
 
+    /*
     if (process.env.NODE_ENV === 'production'
     ) 
     {
         plugins = plugins.concat([ '@babel/plugin-transform-async-to-generator'
             , '@babel/plugin-syntax-async-functions']);
-    }
+    }*/
 
     /*
     if(process.env.NODE_ENV != 'test')
@@ -42,7 +43,7 @@ function babel_plugins()
 
 let externals = {
     dashjs: 'dashjs'
-}
+};
 
 if(process.env.NODE_ENV === 'test')
 {
@@ -104,6 +105,7 @@ module.exports = {
                 , loader: 'vue-loader' 
                 , options: {
                     loaders: {
+                        /*
                         scss: [
                             'vue-style-loader'
                             , 'css-loader'
@@ -112,18 +114,31 @@ module.exports = {
                             , {
                                 loader: 'sass-resources-loader'
                                 , options: {
-                                    //resources: path.resolve(__dirname, './src/style/_variables.scss'), // for example
+                                    resources: path.resolve(__dirname, './src/style/_variables.scss') // for example
+                                    //, path.resolve(__dirname, './node_modules/@mediagoom/chunk-upload/src/UI/style.scss')
+                                    
                                 },
                             }
                         ]
                         , sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax' // <style lang="sass">
-                        , js: {
+                        ,
+                        js: {
                             loader: 'babel-loader'
                             , options: {
-                                presets: [ '@babel/preset-env']
+                                //presets: [ '@babel/preset-env']
+                                presets: ['@babel/env', { 
+                                    modules: false 
+                                    , 'targets': {
+                                        'chrome': '58'
+                                        ,'ie': '11'
+                                    }
+                                    , forceAllTransforms: true
+                                    , useBuiltIns: 'usage'
+                                }]
                                 , plugins: babel_plugins()
                             }
                         }
+                        */
                     }
                 }
             }
@@ -136,7 +151,16 @@ module.exports = {
                 ///node_modules\/(?!(vuetify|ANOTHER-ONE)\/).*
                 , loader: 'babel-loader'
                 , options: {
-                    presets: ['@babel/preset-env']
+                    presets: [ ['@babel/env', { 
+                        modules: false 
+                        , 'targets': {
+                            'chrome': '58'
+                            ,'ie': '11'
+                        }
+                        , forceAllTransforms: true
+                        , useBuiltIns: 'usage'
+                    } ]
+                    ]
                     , plugins: babel_plugins()
                 }
             }
@@ -148,6 +172,14 @@ module.exports = {
                     'vue-style-loader'
                     ,'css-loader'
                     ,'sass-loader'
+                    , { loader: 'sass-resources-loader'
+                        , options: {
+                            sourceMap: true
+                            ,resources: [
+                                path.resolve(__dirname, './src/style/_variables.scss') 
+                                ,]
+                        }
+                    }
                 ]
             }
             ,{
@@ -201,8 +233,8 @@ if (process.env.NODE_ENV != 'test') {
 
 if (process.env.NODE_ENV === 'production') {
 
-    module.exports.entry = ['babel-polyfill', './src/index.js'];
-    module.exports.devtool = '#source-map';
+    //module.exports.entry = ['babel-polyfill', './src/index.js'];
+    //module.exports.devtool = '#source-map';
     // http://vue-loader.vuejs.org/en/workflow/production.html
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
@@ -210,7 +242,8 @@ if (process.env.NODE_ENV === 'production') {
                 NODE_ENV: '"production"'
             }
         })
-        , new webpack.optimize.UglifyJsPlugin({
+
+        /*, new webpack.optimize.UglifyJsPlugin({
             sourceMap: true
             ,compress: {
                 warnings: false
@@ -218,7 +251,7 @@ if (process.env.NODE_ENV === 'production') {
             , mangle: {
                 except: ['Service', 'business_object', 'Axiom', 'auth', 'data'], // blacklist your service from being mangled
             }
-        })
+        })*/
         , new webpack.LoaderOptionsPlugin({
             minimize: true
         })
