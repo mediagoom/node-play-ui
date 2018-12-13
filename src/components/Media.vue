@@ -13,8 +13,6 @@
         <img v-if="dash || hls3" v-on:click="play()" class="picon" src="../assets/play-icon.png"/> 
 
 
-
-
           <ul v-if="errors && errors.length">
             <li v-for="error of errors" v-bind:key="error.message">
               {{error.message}}
@@ -31,7 +29,7 @@
 
 import axios from 'axios';
 import router from '../router';
-import config from './config';
+
 
 export default {
     name: 'Media'
@@ -76,7 +74,7 @@ export default {
           })
     }
   , computed: {
-      imgurl: function () { return config.asset_root + '/' + this.owner + '/' + this.id + '/' + this.thumb[1]; }
+      imgurl: function () { return '/play/' + this.owner + '/' + this.id + '/' + this.thumb[1]; }
   }
 
 }
@@ -112,6 +110,7 @@ a {
     width: 15em;
     margin-left: auto;
     margin-right: auto;
+    margin-top: .6em;
 
 
     

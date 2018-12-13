@@ -18,7 +18,7 @@ export default new Router({
             ,name: 'Assets'
             ,component: Assets
             , props: {filter: 'ok'}
-            , canReuse : false
+            , canReuse : true
         }
         , {
             path: '/play/:id'

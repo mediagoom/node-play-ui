@@ -177,6 +177,7 @@ module.exports = {
                             sourceMap: true
                             ,resources: [
                                 path.resolve(__dirname, './src/style/_variables.scss') 
+                                //, path.resolve(__dirname, './node_modules/@mediagoom/chunk-upload/src/UI/style.scss')
                                 ,]
                         }
                     }

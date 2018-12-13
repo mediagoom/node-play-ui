@@ -3,8 +3,13 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
+import IOC from './IOC';
 
-Vue.config.productionTip = false;
+//Vue.config.productionTip = false;
+
+const services = {};
+
+Vue.use(IOC, services);
 
 /* eslint-disable no-new */
 new Vue({

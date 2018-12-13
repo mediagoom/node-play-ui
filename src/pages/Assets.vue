@@ -1,16 +1,18 @@
 <template>
     <div class="Assets">
         <h3>Media</h3>
-        <div v-if="assets && assets.length">
-            <div v-for="(a, idx) of assets" 
-                is="Media" 
-                v-bind:key="a.mediaid" 
-                v-bind:mediaid="a.id" 
-                v-bind:idx="idx" 
-                v-bind:filter="filter"
-            >
-            </div>
+
+        <div class="assets_body" v-if="assets && assets.length">
+              <div v-for="(a, idx) of assets" 
+                  is="Media" 
+                  v-bind:key="a.mediaid" 
+                  v-bind:mediaid="a.id" 
+                  v-bind:idx="idx" 
+                  v-bind:filter="filter"
+              >
+              </div>
         </div>
+        
 
         <Uploader v-if="!assets.length && filter=='ok'">
         </Uploader>
@@ -75,5 +77,13 @@ li {
 
 a {
   color: #42b983;
+}
+
+.assets_body
+{
+  display: flex;
+  max-width: 60em;
+  margin: auto;
+  flex-wrap: wrap; 
 }
 </style>
