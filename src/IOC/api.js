@@ -23,6 +23,16 @@ function get_api(options)
             console.log(response.data);
     
         }
+
+        , upload_id : async (id) => {
+            
+            const response = await axios.get(`/api/upload/${id}`);
+
+            let server_id = response.data.id;
+
+            return server_id;
+             
+        }
     };
 }
 

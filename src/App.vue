@@ -1,21 +1,21 @@
 <template>
-<div id="app">
+  <div id="app">
     
-    <img src="./assets/logo.svg" id="logo">
+    <img id="logo" src="./assets/logo.svg">
     <div>
-        <router-link to="/">Home</router-link> | 
-        <router-link to="/uploader">Uploader</router-link> |
-        <router-link to="/working">Working</router-link>
+      <router-link to="/">Home</router-link> | 
+      <router-link to="/uploader">Uploader</router-link> |
+      <router-link to="/working">Working</router-link>
     </div>
     
-    <router-view></router-view>
+    <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
-}
+    name: 'App'
+};
 
 </script>
 

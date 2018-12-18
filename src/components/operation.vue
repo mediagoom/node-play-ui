@@ -1,65 +1,68 @@
 <template>
-    <div :class="classlook" >
+  <div :class="classlook" >
         
-        <div class="operation_head">
-            <div></div>
-            <div class="operation_name" v-on:click="toggle_detail()">{{operation.name}}</div>
-            <div v-if="(!operation.succeeded) && operation.completed" class="command redo" v-on:click="redo()"></div>
-            <div class="command" v-if="operation.succeeded || (!operation.completed)" ></div>
-        </div>
-
-        
-        
-        <div :class="classdetail">
-          
-          <div v-for="(a) of Object.keys(operation)"
-          v-bind:key="a">
-            <span v-if="a != 'propertyBag'"> {{a}} {{operation[a]}}</span>
-          </div>
-
-          
-        </div>
-
+    <div class="operation_head">
+      <div/>
+      <div class="operation_name" v-on:click="toggle_detail()">{{ operation.name }}</div>
+      <div v-if="(!operation.succeeded) && operation.completed" class="command redo" v-on:click="redo()"/>
+      <div v-if="operation.succeeded || (!operation.completed)" class="command" />
     </div>
+
+    <div :class="classdetail">
+          
+      <div v-for="(a) of Object.keys(operation)"
+           :key="a">
+        <span v-if="a != 'propertyBag'"> {{ a }} {{ operation[a] }}</span>
+      </div>
+
+          
+    </div>
+
+  </div>
 </template>
 
 <script>
 
 export default {
     name: 'Operation'
-  , props: ['operation', 'position', 'mediaid']
-  , data () {
+    , props: ['operation', 'position', 'mediaid']
+    , data () {
         return {
             status: null
             , detail : false
             , toggle_detail(){ this.detail = !this.detail;}
             , redo()
             {
-                this.api.redo(this.mediaid, this.operation.id);
+                this.api.redo(this.mediaid, this.operation.id).then(() => {}).catch(err => { alert(err.message); } );
             }
-        }
+        };
     }
    
-   , created () {
-      this.api = this.ioc('api');
-    }
-  
     , computed: {
         classlook () {
+            const time = new Date();
+
             if(this.operation)
-                return "look " + this.operation.succeeded.toString() + '-' + this.operation.completed.toString(); 
+                if(null == this.operation.lease_time || this.operation.lease_time < time)
+                    return 'look ' + this.operation.succeeded.toString() + '-' + this.operation.completed.toString(); 
+                else
+                    return 'look leasetime';
             
-            return "nope";
+            return 'nope';
         }
         , classdetail ()
         {
             if(this.detail)
-                return "opedetails";
+                return 'opedetails';
             else
-                return "hidden opedetails";
+                return 'hidden opedetails';
         }
+    }, created () {
+        this.api = this.ioc('api');
     }
-}
+  
+    ,
+};
 </script>
 
 
@@ -111,7 +114,10 @@ export default {
 
 }
 
-
+.leasetime
+{
+    background-color: yellow;
+}
 
 .true-true
 {

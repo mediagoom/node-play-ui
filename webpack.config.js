@@ -1,8 +1,26 @@
 ﻿const webpack = require('webpack');
 const path    = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+//var HtmlWebpackPlugin = require('html-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const sass = require('node-sass');
+const readFileSync = require('fs').readFileSync;
+
+//const chunk_upload_path = './node_modules/@mediagoom/chunk-upload';
+
+const chunk_upload_path = '../chunk-upload';
+
+function svg_inline(value)
+{
+    //const val = value.dartValue.a;
+    const val = value.getValue();
+
+    const svg_path = path.resolve( chunk_upload_path + '/assets', val);
+   
+    const content = readFileSync(svg_path);
+
+    return new sass.types.String('url("data:image/svg+xml;base64,' + content.toString('base64') + '")');
+}
 
 
 //var transform_imports = require('babel-plugin-transform-imports')
@@ -82,6 +100,7 @@ module.exports = {
         path: __dirname + '/bin/'
         , filename: 'bundle.js'
         , chunkFilename: '[name].bundle.js'
+        , publicPath: '/script/'
         //, devtoolModuleFilenameTemplate: '[absolute-resource-path]'
         //, devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
     }
@@ -171,13 +190,19 @@ module.exports = {
                 ,use: [
                     'vue-style-loader'
                     ,'css-loader'
-                    ,'sass-loader'
+                    , { loader: 'sass-loader'
+                        , options: {
+                            functions: {
+                                'svg($value1)' : svg_inline
+                            }
+                        }
+                    }
                     , { loader: 'sass-resources-loader'
                         , options: {
                             sourceMap: true
                             ,resources: [
                                 path.resolve(__dirname, './src/style/_variables.scss') 
-                                //, path.resolve(__dirname, './node_modules/@mediagoom/chunk-upload/src/UI/style.scss')
+                                , path.resolve(__dirname, './node_modules/@mediagoom/chunk-upload/src/UI/style.scss')
                                 ,]
                         }
                     }
@@ -223,6 +248,12 @@ module.exports = {
             , '/play': 'http://localhost:3000'
             , '/upload': 'http://localhost:3000' 
         }
+        , index: 'index.html'
+        , overlay: {
+            warnings: false
+            , errors: true
+        }
+        //, publicPath: '/script/'
     }
 };
 

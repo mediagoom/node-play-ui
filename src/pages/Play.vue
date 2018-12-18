@@ -1,16 +1,16 @@
 <template>
-    <div class="Play">
-        <h3>Play {{name}}</h3>
-        <div class="playbody">
-                <div id="playerhost"></div>
-        </div>
-          <ul v-if="errors && errors.length">
-            <li v-for="error of errors" v-bind:key="error.message">
-              {{error.message}}
-            </li>
-          </ul>
-        
+  <div class="Play">
+    <h3>Play {{ name }}</h3>
+    <div class="playbody">
+      <div id="playerhost"/>
     </div>
+    <ul v-if="errors && errors.length">
+      <li v-for="error of errors" :key="error.message">
+        {{ error.message }}
+      </li>
+    </ul>
+        
+  </div>
 </template>
 <script>
 
@@ -21,47 +21,47 @@ let mgp = new Mgplay();
 
 export default {
     name: 'Play'
-  , props: ['mediaid', 'idx']
-  , data () {
-    return {status: null
-                    , name: null
-                    , id: null
-                    , owner: null
-                    , hls3: null
-                    , dash: null
-                    , thumb: []
-                    , hls4: null
-                    , playready: null
-                    , widevine: null
-                    , errors: []
-                    , play () {
-                        alert(this.dash);
-                }
+    , props: ['mediaid', 'idx']
+    , data () {
+        return {status: null
+            , name: null
+            , id: null
+            , owner: null
+            , hls3: null
+            , dash: null
+            , thumb: []
+            , hls4: null
+            , playready: null
+            , widevine: null
+            , errors: []
+            , play () {
+                alert(this.dash);
+            }
+        };
     }
-  }
-   // Fetches assets when the component is created.
-   , created () {
-       // axios.get(`/api/status/$(this.mediaid)`)
+    // Fetches assets when the component is created.
+    , created () {
+        // axios.get(`/api/status/$(this.mediaid)`)
         axios.get('/api/status/' + this.$route.params.id)
-    .then(response => {
-      // JSON responses are automatically parsed.
-      this.status = response.data.status;
-      this.owner = response.data.owner;
-      this.dash = response.data.dash;
-      this.hls3 = response.data.hls3;
-      this.thumb = response.data.thumb;
-      this.id = response.data.id;
-      this.name = response.data.name;
+            .then(response => {
+                // JSON responses are automatically parsed.
+                this.status = response.data.status;
+                this.owner = response.data.owner;
+                this.dash = response.data.dash;
+                this.hls3 = response.data.hls3;
+                this.thumb = response.data.thumb;
+                this.id = response.data.id;
+                this.name = response.data.name;
 
-      mgp.play(window.location.protocol + '//' + window.location.host + '/play/' + this.owner + '/' + this.id + '/', response.data);
+                mgp.play(window.location.protocol + '//' + window.location.host + '/play/' + this.owner + '/' + this.id + '/', response.data);
 
-       // alert(JSON.stringify(this.assets));
-    })
-    .catch(e => {
-      this.errors.push(e);
-    })
-  }
-}
+                // alert(JSON.stringify(this.assets));
+            })
+            .catch(e => {
+                this.errors.push(e);
+            });
+    }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

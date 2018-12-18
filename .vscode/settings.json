@@ -18,5 +18,12 @@
   
      , "editor.insertSpaces": true
   
-   
+     , "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        {
+            "language": "vue",
+            "autoFix": true
+        }
+    ], 
 }
