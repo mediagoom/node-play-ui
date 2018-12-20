@@ -166,18 +166,19 @@ module.exports = {
             // apply babel transform to all the dependencies!
             ,{
                 test: /\.js$/
-                , exclude:  /node_modules/
+                , exclude: /node_modules[\/\\](?!(superagent|ANOTHER-ONE)[\/\\]).*/
                 ///node_modules\/(?!(vuetify|ANOTHER-ONE)\/).*
+                //
                 , loader: 'babel-loader'
                 , options: {
                     presets: [ ['@babel/env', { 
-                        modules: false 
+                        modules: 'commonjs'
                         , 'targets': {
                             'chrome': '58'
                             ,'ie': '11'
                         }
                         , forceAllTransforms: true
-                        , useBuiltIns: 'usage'
+                        //, useBuiltIns: 'usage'
                     } ]
                     ]
                     , plugins: babel_plugins()

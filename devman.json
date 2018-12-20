@@ -1,20 +1,6 @@
 {
     "proc" : [
-            {
-              "name"        : "player"
-            , "watch"       : ["../play/src/**/*.js"]
-            , "execOptions" : [{"cwd": "../play"}
-                             , {"ignoreError": true, "shell" : true, "env" : { "PATH" : "./node_modules/.bin/"}}
-                             , {"shell" : true}
-                             , {"shell" : true}
-                            ]
-            , "exec"        : ["npm run bundle"
-                             , "shx mkdir node_modules/@mediagoom/play"
-                             , "shx cp -r ../play/lib node_modules/@mediagoom/play"
-                             , "shx cp ../play/package.json node_modules/@mediagoom/play"
-                            ]
-        }
-        , {
+           {
                 "name"        : "api"
               , "watch"       : ["../node-play/src/**/*.js", "!../node-play/src/**/client/*", "!../node-play/src/**/test/*"]
               , "execOptions" : [{"cwd": "../node-play"}]

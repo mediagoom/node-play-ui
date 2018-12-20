@@ -20,6 +20,8 @@ import {build} from '@mediagoom/chunk-upload/lib/ui';
 
 let upm = null;
 
+
+
 export default {
     name: 'Uploader'
     , data () {
@@ -38,19 +40,24 @@ export default {
             {'url': window.location.protocol + '//' + window.location.host + '/upload'
                 , 'owner': 'uploader'});
         
-        upm.on('new', (id) => {
+        if(upm.vue_upload === undefined)
+        {
+            upm.on('new', (id) => {
 
-            this.api.upload_id(id).then(server_id => {
+                this.api.upload_id(id).then(server_id => {
                 
-                let url = upm.uploader[id]._opt.url;
-                url += '/' + server_id;
-                upm.uploader[id]._opt.url = url;
+                    let url = upm.uploader[id]._opt.url;
+                    url += '/' + server_id;
+                    upm.uploader[id]._opt.url = url;
                 
-            }).catch(e => {
-                this.errors.push(e);
+                }).catch(e => {
+                    this.errors.push(e);
+                });
+
             });
+        }
 
-        });
+        upm.vue_upload = true;        
 
     }
     , mounted: function () {

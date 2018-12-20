@@ -6,22 +6,20 @@
   "private": true,
   "scripts": {
     "unit": "mocha-webpack --webpack-config webpack.config.js --require test/unit/setup.js --mode development \"test/unit/**/*.spec.js\"",
-    
     "lint": "eslint --ext .js,.vue src ",
     "build-dev": "webpack --mode development",
     "build": "webpack --mode production",
     "serve": "webpack-dev-server --open --hot",
-    "start": "node node_modules/@mediagoom/devman"
-
-    , "deploy-clean-dir": "shx --silent rm -fr ../node-play/dist"
-    , "deploy-mkdir-dir": "shx mkdir ../node-play/dist"
-    , "deploy-mkdir-script": "shx mkdir ../node-play/dist/script"
-    , "deploy-copy-html": "shx cp index.html ../node-play/dist"
-    , "deploy-copy-asset": "shx cp ./bin/*.* ../node-play/dist/script"
-
-    , "deploy" : "run-s deploy-clean-dir deploy-mkdir-dir deploy-mkdir-script deploy-copy-html deploy-copy-asset"
+    "start": "node node_modules/@mediagoom/devman",
+    "deploy-clean-dir": "shx --silent rm -fr ../node-play/dist",
+    "deploy-mkdir-dir": "shx mkdir ../node-play/dist",
+    "deploy-mkdir-script": "shx mkdir ../node-play/dist/script",
+    "deploy-copy-html": "shx cp index.html ../node-play/dist",
+    "deploy-copy-asset": "shx cp ./bin/*.* ../node-play/dist/script",
+    "deploy": "run-s deploy-clean-dir deploy-mkdir-dir deploy-mkdir-script deploy-copy-html deploy-copy-asset"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.0.0",
     "@mediagoom/chunk-upload": "0.0.10",
     "@mediagoom/play": "0.0.5",
     "axios": "^0.15.3",

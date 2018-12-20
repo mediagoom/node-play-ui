@@ -13,7 +13,7 @@
     </div>
         
 
-    <Uploader v-if="!assets.length && filter=='ok'"/>
+    <Uploader v-if="!assets.length && filter=='ok' && requested"/>
 
 
     <ul v-if="errors && errors.length">
@@ -36,24 +36,31 @@ export default {
     , components: {'Media': Media, 'Uploader': Uploader}
 
     // Fetches assets when the component is created.
-    , props: ['filter']
+    , props: {filter : {type: String, default: 'ok'}}
     , data () {
         return {
-            assets: []
+            requested : false
+            , assets: []
             , errors: []
         };
     }
     , created () {
+        
+    }
+    , mounted () 
+    {
         axios.get('/api/list')
             .then(response => {
-                // JSON responses are automatically parsed.
-                this.assets = response.data.assets;
-                // alert(JSON.stringify(this.assets));
+            // JSON responses are automatically parsed.
+                this.assets = response.data.assets.slice(0, 21);
+                this.requested = true;
+            // alert(JSON.stringify(this.assets));
             })
             .catch(e => {
                 this.errors.push(e);
             });
     }
+    
 };
 </script>
 
