@@ -11,34 +11,35 @@
              :mediaid="mediaid"
         />
        
-       
       </div>
     </div>
+
+    <Errors :errors="errors"/>
+
   </div>
 </template>
 <script>
 
 import axios from 'axios';
-import operattion from '../components/operation.vue';
-
+import operation from '../components/operation.vue';
+import errors from '../components/errors.vue';
 
 export default {
     name: 'Flow'
   
-    , components: {'Operation': operattion}
+    , components: {'Operation': operation, 'Errors': errors}
     // Fetches assets when the component is created.
     , data () {
         return {
             id : null
             , flow: null
+            , errors: []
         };
     }
     , computed:
   {
       mediaid(){return this.$route.params.id;}
   }, created () {
-        
-        
         
         this.id = this.$route.params.id; 
         axios.get('/api/queue/' + this.$route.params.id)

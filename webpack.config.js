@@ -3,32 +3,22 @@ const path    = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 //var HtmlWebpackPlugin = require('html-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const sass = require('node-sass');
-const readFileSync = require('fs').readFileSync;
 
-//const chunk_upload_path = './node_modules/@mediagoom/chunk-upload';
-
-const chunk_upload_path = '../chunk-upload';
-
-function svg_inline(value)
-{
-    //const val = value.dartValue.a;
-    const val = value.getValue();
-
-    const svg_path = path.resolve( chunk_upload_path + '/assets', val);
-   
-    const content = readFileSync(svg_path);
-
-    return new sass.types.String('url("data:image/svg+xml;base64,' + content.toString('base64') + '")');
-}
-
-
+const inline_svg = require('postcss-inline-svg')(
+    {
+        paths : [
+            path.normalize(path.join(__dirname, './node_modules/@mediagoom/chunk-upload/src/ui'))
+        ]
+    }
+);
 //var transform_imports = require('babel-plugin-transform-imports')
 
 function babel_plugins()
 {
    
-    let plugins = ['@babel/plugin-transform-runtime', '@babel/plugin-syntax-dynamic-import'];
+    let plugins = ['@babel/plugin-transform-runtime'
+        , '@babel/plugin-syntax-dynamic-import'
+    ];
 
     /*
     if (process.env.NODE_ENV === 'production'
@@ -49,8 +39,8 @@ function babel_plugins()
                 }
             }]
         ]);
-    }
-    */
+    }*/
+    
 
     
 
@@ -61,15 +51,20 @@ function babel_plugins()
 
 let externals = {
     dashjs: 'dashjs'
+    , 'superagent-proxy' : {
+        commonjs : 'superagent-proxy'
+    }
 };
 
-if(process.env.NODE_ENV === 'test')
-{
-    externals = [nodeExternals()];
-}
+
 
 module.exports = {
-    context: __dirname
+    node: {
+        url : false
+        , punycode : false
+        , process : false
+    }
+    , context: __dirname
     , externals /*: {
         dashjs: 'dashjs'
         
@@ -124,40 +119,7 @@ module.exports = {
                 , loader: 'vue-loader' 
                 , options: {
                     loaders: {
-                        /*
-                        scss: [
-                            'vue-style-loader'
-                            , 'css-loader'
-                            //'postcss-loader',
-                            , 'sass-loader'
-                            , {
-                                loader: 'sass-resources-loader'
-                                , options: {
-                                    resources: path.resolve(__dirname, './src/style/_variables.scss') // for example
-                                    //, path.resolve(__dirname, './node_modules/@mediagoom/chunk-upload/src/UI/style.scss')
-                                    
-                                },
-                            }
-                        ]
-                        , sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax' // <style lang="sass">
-                        ,
-                        js: {
-                            loader: 'babel-loader'
-                            , options: {
-                                //presets: [ '@babel/preset-env']
-                                presets: ['@babel/env', { 
-                                    modules: false 
-                                    , 'targets': {
-                                        'chrome': '58'
-                                        ,'ie': '11'
-                                    }
-                                    , forceAllTransforms: true
-                                    , useBuiltIns: 'usage'
-                                }]
-                                , plugins: babel_plugins()
-                            }
-                        }
-                        */
+                        
                     }
                 }
             }
@@ -166,12 +128,13 @@ module.exports = {
             // apply babel transform to all the dependencies!
             ,{
                 test: /\.js$/
-                , exclude: /node_modules[\/\\](?!(superagent|ANOTHER-ONE)[\/\\]).*/
+                , exclude: /node_modules[\/\\](?!(superagent$|ANOTHER-ONE)[\/\\]).*/
+                //, exclude: /node_modules\/.*/
                 ///node_modules\/(?!(vuetify|ANOTHER-ONE)\/).*
                 //
                 , loader: 'babel-loader'
                 , options: {
-                    presets: [ ['@babel/env', { 
+                    presets: [ ['@babel/env' , { 
                         modules: 'commonjs'
                         , 'targets': {
                             'chrome': '58'
@@ -179,7 +142,7 @@ module.exports = {
                         }
                         , forceAllTransforms: true
                         //, useBuiltIns: 'usage'
-                    } ]
+                    }]
                     ]
                     , plugins: babel_plugins()
                 }
@@ -191,13 +154,16 @@ module.exports = {
                 ,use: [
                     'vue-style-loader'
                     ,'css-loader'
-                    , { loader: 'sass-loader'
-                        , options: {
-                            functions: {
-                                'svg($value1)' : svg_inline
-                            }
+                    , {
+                        loader: 'postcss-loader'
+                        ,options: {
+                            ident: 'postcss'
+                            ,plugins: [
+                                inline_svg
+                            ]
                         }
                     }
+                    , { loader: 'sass-loader'}
                     , { loader: 'sass-resources-loader'
                         , options: {
                             sourceMap: true
@@ -218,10 +184,7 @@ module.exports = {
                     }
                 ]
             }
-            /*,{
-                test: /\.css$/
-                , use: [ 'style-loader', 'css-loader' ]
-            }*/
+            
             
         ]
     }
@@ -294,7 +257,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // test specific setups
 if (process.env.NODE_ENV === 'test') {
-    module.exports.externals = [require('webpack-node-externals')()];
+    module.exports.externals = [nodeExternals()];
     module.exports.devtool = 'inline-cheap-module-source-map';
     //module.exports.devtool = "source-map";
 }

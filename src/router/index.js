@@ -1,9 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-//import Assets from '../components/Assets';
-//import Play from '../components/Play'
-//import Uploader from '../components/Uploader';
+/*
+import Assets from '../pages/Assets';
+import Play from '../pages/Play'
+import Uploader from '../pages/Uploader';
+import Flow from '../pages/Flow'
+*/
 
 const Play = () => import(/* webpackChunkName: "pages" */ '../pages/Play')
 const Uploader = () => import(/* webpackChunkName: "pages" */ '../pages/Uploader');

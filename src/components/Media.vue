@@ -12,12 +12,7 @@
     <img v-if="thumb && thumb.length" :src="imgurl" class="pthumb">
     <img v-if="dash || hls3" class="picon" src="../assets/play-icon.png" v-on:click="play()" > 
 
-
-    <ul v-if="errors && errors.length">
-      <li v-for="error of errors" :key="error.message">
-        {{ error.message }}
-      </li>
-    </ul>
+    <Errors :errors="errors"/>
 
         
   </div>
@@ -29,10 +24,12 @@
 
 import axios from 'axios';
 import router from '../router';
+import errors from '../components/errors.vue';
 
 
 export default {
     name: 'Media'
+    , components: {'Errors': errors}
     , props: ['mediaid', 'idx', 'filter']
     , data () {
         return {status: null

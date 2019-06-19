@@ -25,5 +25,25 @@
             "language": "vue",
             "autoFix": true
         }
-    ], 
+    ],  "peacock.favoriteColors": [
+        
+        { "name": "node-play-ui", "value": "#42f4b9" },
+        
+      
+]
+, "peacock.affectActivityBar"	: true
+, "peacock.affectStatusBar" : true
+,
+"peacock.affectTitleBar": false,
+"workbench.colorCustomizations": {
+    "activityBar.background": "#72f7cb",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#c768f6",
+    "activityBarBadge.foreground": "#15202b",
+    "statusBar.background": "#42f4b9",
+    "statusBarItem.hoverBackground": "#12f1a7",
+    "statusBar.foreground": "#15202b"
+},
+
 }

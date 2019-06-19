@@ -2,7 +2,7 @@
   <div class="Uploader">
     <h1>Uploader</h1>
 
-    <div ref="uploaderhost"/>
+    <div ref="uploaderhost" />
         
     <ul v-if="errors && errors.length">
       <li v-for="error of errors" :key="error.message">
@@ -16,7 +16,7 @@
 <script>
 
 
-import {build} from '@mediagoom/chunk-upload/lib/ui';
+import build from '@mediagoom/chunk-upload/lib/ui';
 
 let upm = null;
 
@@ -36,40 +36,47 @@ export default {
     , created () {
         this.api = this.ioc('api');
 
-        upm = build(this.$refs.uploaderhost,
-            {'url': window.location.protocol + '//' + window.location.host + '/upload'
-                , 'owner': 'uploader'});
         
-        if(upm.vue_upload === undefined)
-        {
-            upm.on('new', (id) => {
-
-                this.api.upload_id(id).then(server_id => {
-                
-                    let url = upm.uploader[id]._opt.url;
-                    url += '/' + server_id;
-                    upm.uploader[id]._opt.url = url;
-                
-                }).catch(e => {
-                    this.errors.push(e);
-                });
-
-            });
-        }
-
-        upm.vue_upload = true;        
+        this.build();
+        
 
     }
     , mounted: function () {
              
-        upm = build(this.$refs.uploaderhost,
-            {'url': window.location.protocol + '//' + window.location.host + '/upload'
-                , 'owner': 'uploader'});
+        this.build();
                 
       
     }
     , methods: {
- 
+        build()
+        {
+            const host = this.$refs.uploaderhost;
+            if(undefined === host)
+                return;
+
+            upm = build(window, host,
+                {'url': window.location.protocol + '//' + window.location.host + '/upload'
+                    , 'owner': 'uploader'});
+
+            if(upm.vue_upload === undefined)
+            {
+                upm.on('new', (id) => {
+
+                    this.api.upload_id(id).then(server_id => {
+                
+                        let url = upm.uploader[id]._opt.url;
+                        url += '/' + server_id;
+                        upm.uploader[id]._opt.url = url;
+                
+                    }).catch(e => {
+                        this.errors.push(e);
+                    });
+
+                });
+            }
+
+            upm.vue_upload = true;        
+        }
     }
 
 };

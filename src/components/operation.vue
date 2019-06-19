@@ -33,7 +33,8 @@ export default {
             , toggle_detail(){ this.detail = !this.detail;}
             , redo()
             {
-                this.api.redo(this.mediaid, this.operation.id).then(() => {}).catch(err => { alert(err.message); } );
+                this.operation.completed = false;
+                this.api.redo(this.mediaid, this.operation.id).then(() => {  }).catch(err => { alert(err.message); } );
             }
         };
     }

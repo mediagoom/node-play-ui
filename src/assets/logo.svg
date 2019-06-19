@@ -17,7 +17,10 @@
    xml:space="preserve"
    id="svg4136"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="logo.svg"><defs
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="A:\Alessandro\My Projects\github\node-play-ui\src\assets\logo.png"
+   inkscape:export-xdpi="3.3568683"
+   inkscape:export-ydpi="3.3568683"><defs
      id="defs4154" /><sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -28,7 +31,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1137"
+     inkscape:window-height="1017"
      id="namedview4152"
      showgrid="false"
      inkscape:zoom="0.8359833"
@@ -57,7 +60,7 @@
          id="path4148"
          style="fill:#40aa6b;fill-opacity:1"
          inkscape:connector-curvature="0" /><path
-         d="m 6269.8014,-1916.3073 62.2,74.2 0,1121.80001 c 0,1184.1 -4.8,1234.4 -107.6,1275 -122,45.4 -215.3,7.2 -1284.6,-526.299997 C 4344.1015,-268.20729 3820.3015,-538.50729 3777.2015,-569.60729 c -90.9,-71.8 -102.9,-174.6 -28.7,-248.8 26.3,-26.3 555,-301.40001 1174.4999,-610.00001 799,-399.4 1145.9,-562.1 1203.3,-562.1 62.2,0 98,19.1 143.5,74.2 z"
+         d="m 6162.1437,-1880.4214 62.2,74.2 0,1121.79999 c 0,1184.1 -4.8,1234.4 -107.6,1275 -122,45.4 -215.3,7.2 -1284.6,-526.299993 C 4236.4438,-232.32141 3712.6438,-502.62141 3669.5438,-533.72141 c -90.9,-71.8 -102.9,-174.6 -28.7,-248.8 26.3,-26.3 555,-301.39999 1174.4999,-609.99999 799,-399.4 1145.9,-562.1 1203.3,-562.1 62.2,0 98,19.1 143.5,74.2 z"
          id="path4150"
          style="fill:#40aa6b;fill-opacity:1"
          inkscape:connector-curvature="0" /></g></g></svg>
