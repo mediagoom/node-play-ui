@@ -9,3 +9,6 @@ selenium-debug.log
 bin/
 *.*~
 *.swp
+.nyc_output/**
+coverage/**
+

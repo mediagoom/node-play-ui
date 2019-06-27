@@ -3,7 +3,6 @@ import operation from '../../../src/components/operation.vue';
 import IOC from '../../../src/IOC';
 
 
-
 const fake_api = 
 {
 
@@ -31,7 +30,7 @@ describe('Testing operation Control ', () => {
     const localVue = createLocalVue();
     localVue.use(IOC, services);
     
-    it('check render data', async () => {
+    it('check render data', /*async*/ () => {
         
         const props = {
             operation : {name : 'test operation'
@@ -39,6 +38,8 @@ describe('Testing operation Control ', () => {
                 , propertyBag : {property: 'property'}
                 , result: 'bad'
                 , id: 'id'
+                , succeeded: true
+                , completed: true
             }   
         };
       

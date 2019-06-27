@@ -1,0 +1,11 @@
+{
+    "exclude" : [
+        "*operation.vue?vue&type=*"
+        , "*-operation*"
+        , "**/api*"
+        , "test/**"
+    ]
+    , "extension" : [
+        ".vue"
+    ]
+}

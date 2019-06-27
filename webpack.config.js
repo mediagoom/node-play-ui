@@ -13,6 +13,20 @@ const inline_svg = require('postcss-inline-svg')(
 );
 //var transform_imports = require('babel-plugin-transform-imports')
 
+const map_file = info => {
+
+    let p = info.resource.replace(/webpack:\/\/\/./gi, '');
+
+    p = p.replace(/external /gi,'./node_modules/').replace(/"/gi, '');
+       
+    if('.' == p.substr(0, 1))
+        p = '.' + p;
+    else
+        p = '../' + p;
+
+    return p;
+};
+
 function babel_plugins()
 {
    
@@ -96,8 +110,7 @@ module.exports = {
         , filename: 'bundle.js'
         , chunkFilename: '[name].bundle.js'
         , publicPath: '/script/'
-        //, devtoolModuleFilenameTemplate: '[absolute-resource-path]'
-        //, devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
+        
     }
     , resolve: {
         extensions: ['.js', '.vue']
@@ -118,7 +131,8 @@ module.exports = {
             ,*/ { test: /\.vue$/
                 , loader: 'vue-loader' 
                 , options: {
-                    loaders: {
+                    optimizeSSR: false //<--- USED TO CORRECTLY COMPILE FOR UNIT TEST
+                    , loaders: {
                         
                     }
                 }
@@ -258,6 +272,20 @@ if (process.env.NODE_ENV === 'production') {
 // test specific setups
 if (process.env.NODE_ENV === 'test') {
     module.exports.externals = [nodeExternals()];
+    
     module.exports.devtool = 'inline-cheap-module-source-map';
-    //module.exports.devtool = "source-map";
+    module.exports.devtool = 'source-map';
+    module.exports.output.devtoolModuleFilenameTemplate = map_file
+    module.exports.output.devtoolFallbackModuleFilenameTemplate = map_file
+    //'[absolute-resource-path]'
+    //, devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
+
+    /*
+    module.exports.devtool = false;
+    module.exports.plugins = (module.exports.plugins || []).concat([
+        new webpack.SourceMapDevToolPlugin({
+
+        })
+    ]);
+    */
 }

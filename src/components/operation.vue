@@ -2,7 +2,7 @@
   <div :class="classlook" >
         
     <div class="operation_head">
-      <div/>
+      <div />
       <div class="operation_name" v-on:click="toggle_detail()">{{ operation.name }}</div>
       <div v-if="(!operation.succeeded) && operation.completed" class="command redo" v-on:click="redo()"/>
       <div v-if="operation.succeeded || (!operation.completed)" class="command" />
